@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>   
+</head>
+<body>
+
+<div>
+ 
+</div>
+
+        <form action="/app/tpAdd" class="modal-content animate"  method="get" >
+                
+            <div class="container">
+ 
+              <h2>Filterable Table</h2>
+               
+              <input id="myInput" type="text" placeholder="Search..">
+              <br><br>
+                <table class="table" id="myTable" name="tpodetails" >
+                  <thead>
+                    <tr>
+                            name,cont_num,user_id,active,gender,cur_add,course,email
+                         <h1>TPO Details</h1>   
+                        <th>name</th>
+                        <th>user_id</th>
+                        
+                     <th>course</th>
+                     <th>email</th>
+                     <th>active</th>
+                     <th>cont_num</th>
+                     <th>gender</th>
+                     <th>cur_add</th>
+
+                     <th>update</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <%for(i in res){%>
+                    <tr>
+                        <td><%=res[i].name%></td>
+                        <td><%=res[i].user_id%></td>
+                       
+                        <td><%=res[i].course%></td>
+                        <td><%=res[i].email%></td>
+                        <%if(res[i].active==1){%>
+                        <td>YES</td>
+                        <%}else{%>
+                            <td>NO</td>
+                        <%}%>
+                        <td><%=res[i].cont_num%></td>
+                        <%if(res[i].gender=='female'){%>
+                          <td>Female</td>
+                          <%}else{%>
+                              <td>Male</td>
+                          <%}%>
+                       
+                        <td><%=res[i].cur_add%></td>
+                        
+                     
+                    <td><button type="button"  class="bg" value= '<%=res[i].tpoid %>'data-toggle="modal" data-target="#tpoupdt">Update</button></td> 
+                    </tr>
+                   <%}%>
+                   
+                  </tbody>
+                </table>
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#add">Open Small Modal</button>
+              </div>
+              </form>
+  
+ 
+              <div class="modal fade" id="tpoupdt" role="dialog">
+                    <div class="modal-dialog">
+                      <form action="/app/tpAdd1" class="modal-content animate"  method="post" >
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">Modal Header</h4>
+                        </div>
+                      
+                        <div class="modal-body">
+                          <label for="name"><b>name</b></label>
+                          <input type="text"  name="name1"  id="name1" value="" class="form-control" required>
+                            <br> 
+                            <label for="user_id"><b>user_id</b></label>
+                            <input type="text"  name="user_id1" id="user_id1" value="" class="form-control" required>
+                              <br>
+                              <label for="course"><b>course</b></label>
+                              <input type="text"  name="course1" id="course1" value="" class="form-control" required>
+                                <br>
+                                <label for="email"><b>email</b></label>
+                                <input type="text"  name="email1" id="email1" value="" class="form-control" required>
+                                  <br>
+                           
+                                  <label for="email"><b>Active</b></label>
+                                  <br>
+                                
+                               <select id="active1" name="active1">
+ 
+                                        <option value=1 >Yes</option>
+                                        <option value=0>No</option>
+                                   
+                            </select>
+
+                              <br>
+                              <label for="cont_num"><b>cont_num</b></label>
+                              <input type="text"  name="cont_num1" id="cont_num1" value="" class="form-control" required>
+                                <br>
+                                <label for="gender"><b>gender</b></label>
+                                <select id="gender1" name="gender1">
+ 
+                                  <option value='female' >Female</option>
+                                  <option value='male'>Male</option>
+                             
+                      </select>
+                                                  <br>
+                                  <label for="cur_add"><b>cur_add</b></label>
+                                  <input type="text"  name="cur_add1" id="cur_add1" value="" class="form-control" required>
+                                    <br>
+                              
+                                      </div>
+                        <div class="modal-footer">
+                          <button type="submit" class="btn-onet" name="updatetpo1" id="updatetpo" value="" >update</button>
+                        </div>
+                      </div>
+                    </form>
+                    </div>
+                   
+                  </div> 
+                  
+                  <!-- add TPO -->
+     
+
+ <div class="modal fade" id="add" role="dialog">
+    <div class="modal-dialog">
+      <form action="/app/tpAdd2" class="modal-content animate"  method="post" enctype="multipart/form-data">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <label for="name"><b>name</b></label>
+          <input type="text"  name="name"    class="form-control" required>
+            <br> 
+            <label for="cont_num"><b>cont_num</b></label>
+            <input type="text"  name="cont_num"  class="form-control" required>
+              <br>
+              <label for="user_id"><b>user_id</b></label>
+            <input type="text"  name="user_id"  value="" class="form-control" required>
+              <br>
+              <label for="pass"><b>pass</b></label>
+            <input type="text"  name="pass"  value="" class="form-control" required>
+              <br>
+              <label for="gender"><b>gender</b></label>
+              <br>
+              <select id="gender1" name="gender">
+ 
+                <option value='female' >Female</option>
+                <option value='male'>Male</option>
+           
+    </select>
+              <br>
+              <label for="cur_add"><b>cur_add</b></label>
+            <input type="text"  name="cur_add"  value="" class="form-control" required>
+              <br>
+              <label for="per_add"><b>per_add</b></label>
+            <input type="text"  name="per_add"  value="" class="form-control" required>
+              <br>
+              <label for="pro_name"><b>picture</b></label>
+              <input type="file" accept="image/*" name="image">
+              <br>
+              <label for="course"><b>course</b></label>
+            <input type="text"  name="course"  value="" class="form-control" required>
+              <br>
+              <label for="email"><b>email</b></label>
+              <input type="text"  name="email"  value="" class="form-control" required>
+                <br>
+             
+                      </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn-onet" name="add" id="add" >add</button>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+                  
+                    
+                    <script type="text/javascript">
+                      $(document).ready(function(){
+                       
+                          // Get combined text contents of all paragraphs
+                          
+                            $('.bg').click(function (e) {
+                             // console.log(e.target.getAttribute('value'));
+                              var a=e.target.getAttribute('value');
+                              console.log(a);
+
+                         $("#update").val(a);
+                            
+
+                   
+
+
+$("#myTable").on('click','.bg',function(){
+         // get the current row
+         var currentRow=$(this).closest("tr"); 
+         
+         var col1=currentRow.find("td:eq(0)").text(); // get current row 1st TD value
+         var col2=currentRow.find("td:eq(1)").text(); // get current row 2nd TD
+         var col3=currentRow.find("td:eq(2)").text(); // get current row 3rd TD
+         var col4=currentRow.find("td:eq(3)").text();
+         var col5=currentRow.find("td:eq(4)").text();
+         var col6=currentRow.find("td:eq(5)").text();
+         var col7=currentRow.find("td:eq(6)").text();
+         var col8=currentRow.find("td:eq(7)").text();
+         var col9=currentRow.find("td:eq(8)").text();
+         console.log(col5);
+         if(col5=="YES"){
+           col5=1;
+           $("#active1 option[value=1]").prop('selected', true);
+         }
+         else{
+           col5=0;
+           $("#active1 option[value=0]").prop('selected', true);
+         }
+
+            if(col7=="Female"){
+         
+           $("#active1 option[value='female']").prop('selected', true);
+         }
+         else{
+          
+           $("#active1 option[value='male']").prop('selected', true);
+         }
+        //var col10=currentRow.find("td:eq(9)").text();
+        console.log(a);
+     //$("#comp_domain").html(col1);
+  $("#name1").val(col1);
+  $("#cont_num1").val(col6);
+  $("#user_id1").val(col2);
+ // $("#active1").val(col5);
+  //$("#gender1").val(col7);
+  $("#cur_add1").val(col8);
+  $("#course1").val(col3);
+  $("#email1").val(col4);
+  
+ 
+  //$("#team1").val(col9);
+  $("#updatetpo").val(a);
+    });
+});
+
+         $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+                          });
+                        });
+                       
+                            </script>
+                
+    </body>
+
+    
+    </html>

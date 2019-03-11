@@ -1,0 +1,150 @@
+                   
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>   
+</head>
+<body>
+            <div class="container">
+ 
+              <h2>Filterable Table</h2>
+               
+              <input id="myInput" type="text" placeholder="Search..">
+              <br><br>
+                <table class="table" id="myTable" name="tpodetails" >
+                        <form action="/app/tpaAdd" class="modal-content animate"  method="get" >
+                  <thead>
+                    <tr>
+                            name,cont_num,user_id,active,gender,cur_add,course,email
+                         <h1>TPa Details</h1>   
+                        <th>name</th>
+                        <th>cont_num</th>
+                        <th>user_id</th>
+                        <th>active</th>
+                        <th>gender</th>
+                     <th>cur_add</th>
+                     <th>email</th>
+                     <th>course</th>
+                     <th>branch</th>
+                   
+                   
+                     
+
+                     <th>update</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <%for(i in res){%>
+                    <tr>
+                        <td><%=res[i].name%></td>
+                        <td><%=res[i].cont_num%></td>
+
+                        <td><%=res[i].user_id%></td>
+                       
+                       
+                        <%if(res[i].active==1){%>
+                        <td>YES</td>
+                        <%}else{%>
+                            <td>NO</td>
+                        <%}%>
+                        <%if(res[i].gender=='female'){%>
+                          <td>Female</td>
+                          <%}else{%>
+                              <td>Male</td>
+                          <%}%>
+                       
+                        <td><%=res[i].cur_add%></td>
+                        <td><%=res[i].email%></td>
+                        <td><%=res[i].course%></td>
+                        <td><%=res[i].branch%></td>
+                        
+                    
+                    <td><button type="button"  class="bg" id="assign" value= '<%=res[i].tpaid %>' data-toggle="modal" data-target="#add">Update</button></td> 
+                  
+                    </tr>
+                   <%}%>
+                   
+                  </tbody>
+                </table>
+                </div>
+              </form>
+
+
+              <div class="modal fade" id="add" role="dialog">
+                  <div class="modal-dialog">
+                     
+                    <form action="/app/tpoassign" class="modal-content animate"  name="tpoassign" id="tpoassign"  method="post" >
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                      </div>
+                      <div class="modal-body">
+                          <select id="course" name="gender">
+               
+                              <option value='btech' >btech</option>
+                              <option value='mba'>mba</option>
+                        </select>
+
+                
+                
+                           <br>
+                           <div id="h">
+
+                           </div>
+                            
+                                    </div>
+                                    
+                      <div class="modal-footer">
+                        <button type="submit" class="btn-onet" name="add" id="add" >add</button>
+                      </div>
+                    </div>
+                  </form>
+                  </div>
+                </div>
+              
+            </body>
+
+           
+            </html>
+ 
+            <script type="text/javascript">
+              $(document).ready(function(){
+                $("#assign").click(function(e){
+                  var a=e.target.getAttribute('value');
+                              console.log(a);
+                              $("#course").change(function(){
+var cour=$('#course').val();
+$.ajax({
+  type:"POST",
+  url:"/app/tpoassign",
+  data: {cour:cour},
+  success:function(res1){
+    //console.log(res1);
+    $("#kirti").val(res1[0].gap);
+   var l=res1.length;
+   var ms='';
+   console.log(res1[0].tpoid);
+   //console.log(k+"hello");
+   for(var i=0;i<l;i++){
+     var s=res1[i].tpoid.toString();
+            ms=ms+'<input type="radio"'+'name="option"' +'value='+res1[i].tpoid.toString()+'>'+' '+res1[i].name+'<br>';
+  
+   }
+   $("#h").append(ms);
+   
+  }
+});
+                  });
+  
+});
+              })
+              </script>
